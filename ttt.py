@@ -1,4 +1,4 @@
-from Tkinter import Tk, Button
+from tkinter import Tk, Button
 
 class ticTacToe:
 	def __init__(self, multiplayer = False):
@@ -6,7 +6,7 @@ class ticTacToe:
 		self._board = [[0,0,0], [0,0,0], [0,0,0]]
 		self._winner = 0
 		self._turn = 0
-		self._toPlay = 1
+		self.toPlay = 1
 		self._multiplayer = multiplayer
 
 	def play(self, row, col):
@@ -16,9 +16,9 @@ class ticTacToe:
 			self.playOn(row, col)
 
 	def playOn(self, row, col):
-		self._board[row][col] = self._toPlay
+		self._board[row][col] = self.toPlay
 		self._turn += 1
-		self._toPlay = -self._toPlay
+		self.toPlay = -self.toPlay
 		self._check()
 
 	def _check(self):
@@ -131,6 +131,7 @@ class GUI:
 		newButton.grid(row = x, col = y)
 
 	def _update(self):
+		pass
 		
 
 
@@ -177,7 +178,26 @@ def singlePlayer():
 		game.printBoard()
 
 def multiPlayer():
-	print('Oops! Multiplayer functionality not supported yet.')
+	cols = ['a', 'b', 'c']
+	rows = ['3', '2', '1']
+	game = ticTacToe()
+
+
+	while not game.over:
+		if game.toPlay > 0:
+			print('Player 1\'s turn to play')
+		else:
+			print('Player 2\'s turn to play')
+		square = readInput()
+		if len(square) == 2 and \
+		square[0] in cols and \
+		square[1] in rows:
+			if game.play(rows.index(square[1]), cols.index(square[0])):
+				print('Please play on an empty square.')
+		else:
+			print('Please play on a valid square in the following format:\n' +
+				'a3|b3|c3\na2|b2|c2\na1|b1|c1')
+		game.printBoard()
 
 
 if __name__ == '__main__':
