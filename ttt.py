@@ -5,17 +5,17 @@ class ticTacToe:
 		self.over = False
 		self._board = [[0,0,0], [0,0,0], [0,0,0]]
 		self._winner = 0
-		self._turn = 0
-		self.toPlay = 1
-		self._multiplayer = multiplayer
+		self._turn = 0 # increments every square played
+		self.toPlay = 1 # 1 for player 1, -1 for player 2
+		# self._multiplayer = multiplayer # unused for now
 
 	def play(self, row, col):
 		if self._board[row][col]:
 			return True
 		else:
-			self.playOn(row, col)
+			self._playOn(row, col)
 
-	def playOn(self, row, col):
+	def _playOn(self, row, col):
 		self._board[row][col] = self.toPlay
 		self._turn += 1
 		self.toPlay = -self.toPlay
@@ -71,22 +71,31 @@ class ticTacToe:
 		for i in range(3):
 			if sum(self._board[i]) == 2 * player:
 				j = self._board[i].index(0)
-				return self.playOn(i, j)
+				return self._playOn(i, j)
 		for j in range(3):
 			if sum([row[j] for row in self._board]) == 2 * player:
 				i = [row[j] for row in self._board].index(0)
-				return self.playOn(i, j)
+				return self._playOn(i, j)
 
 		for i in range(3):
 			if sum(self._board[i]) == 2 * -player:
 				j = self._board[i].index(0)
-				return self.playOn(i, j)
+				return self._playOn(i, j)
 		for j in range(3):
 			if sum([row[j] for row in self._board]) == 2 * -player:
 				i = [row[j] for row in self._board].index(0)
-				return self.playOn(i, j)
+				return self._playOn(i, j)
 
 		if self._board[1][1]:
+			for i in range(3):
+				if sum(self._board[i]) == player:
+					j = self._board[i].index(0)
+					return self._playOn(i, j)
+			for j in range(3):
+				if sum([row[j] for row in self._board]) == player:
+					i = [row[j] for row in self._board].index(0)
+					return self._playOn(i, j)
+				
 			if self._board[0][0]:
 				if self._board[2][0]:
 					if self._board[0][2]:
@@ -94,23 +103,23 @@ class ticTacToe:
 							if self._board[1][0]:
 								if self._board[0][1]:
 									if self._board[1][2]:
-										return self.playOn(2, 1)
+										return self._playOn(2, 1)
 									else:
-										return self.playOn(1, 2)
+										return self._playOn(1, 2)
 								else:
-									return self.playOn(0, 1)
+									return self._playOn(0, 1)
 							else:
-								return self.playOn(1, 0)
+								return self._playOn(1, 0)
 						else:
-							return self.playOn(2, 2)
+							return self._playOn(2, 2)
 					else:
-						return self.playOn(0, 2)
+						return self._playOn(0, 2)
 				else:
-					return self.playOn(2, 0)
+					return self._playOn(2, 0)
 			else:
-				return self.playOn(0, 0)
+				return self._playOn(0, 0)
 		else:
-			return self.playOn(1, 1)
+			return self._playOn(1, 1)
 
 class GUI:
 	def __init__(self):
@@ -171,7 +180,8 @@ def singlePlayer():
 			if game.play(rows.index(square[1]), cols.index(square[0])):
 				print('Please play on an empty square.')
 			else:
-				game.AIPlay(-1)
+				if not game.over:
+					game.AIPlay(-1)
 		else:
 			print('Please play on a valid square in the following format:\n' +
 				'a3|b3|c3\na2|b2|c2\na1|b1|c1')
