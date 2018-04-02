@@ -88,13 +88,36 @@ class ticTacToe:
 
 		if self._board[1][1]:
 			for i in range(3):
-				if sum(self._board[i]) == player:
-					j = self._board[i].index(0)
-					return self._playOn(i, j)
-			for j in range(3):
-				if sum([row[j] for row in self._board]) == player:
-					i = [row[j] for row in self._board].index(0)
-					return self._playOn(i, j)
+				for j in range(3):
+					if not self._board[i][j]:
+						if (sum([row[j] for row in self._board]) == player) and \
+						sum(self._board[i]) == player:
+							return self._playOn(i, j)
+						if (sum([row[j] for row in self._board]) == -player) and \
+						sum(self._board[i]) == -player:
+							return self._playOn(i, j)
+
+		# if self._board[1][1]:
+		# 	for i in range(3):
+		# 		if sum(self._board[i]) == player:
+		# 			for j in range(3):
+		# 				if not self._board[i][j]:
+		# 					return self._playOn(i, j)
+		# 	for j in range(3):
+		# 		if sum([row[j] for row in self._board]) == player:
+		# 			for i in range(3):
+		# 				if not self._board[i][j]:
+		# 					return self._playOn(i, j)
+		# 	for i in range(3):
+		# 		if sum(self._board[i]) == -player:
+		# 			for j in range(3):
+		# 				if not self._board[i][j]:
+		# 					return self._playOn(i, j)
+		# 	for j in range(3):
+		# 		if sum([row[j] for row in self._board]) == -player:
+		# 			for i in range(3):
+		# 				if not self._board[i][j]:
+		# 					return self._playOn(i, j)
 				
 			if self._board[0][0]:
 				if self._board[2][0]:
