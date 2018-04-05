@@ -1,4 +1,5 @@
 from tkinter import Tk, Button, PhotoImage, Label #, Text
+import sys
 
 class ticTacToe:
 	def __init__(self, multiplayer = False):
@@ -306,25 +307,27 @@ def read_input():
 		exit()
 
 def main():
-	gui = GUI()
-	players = 0
-	while players not in ['1', '2']:
-		print('How many players?')
-		players = read_input()
-	players = int(players)
-	while True:
-		if players == 1:
-			winner = single_player()
-		else:
-			winner = multi_player()
-		if winner > 0:
-			print("Player 1 wins!")
-		elif winner < 0:
-			print("Player 2 wins!")
-		else:
-			print("It's a draw!")
-		print('Type anything to play again, or Ctrl-D to exit')
-		read_input()
+	if sys.argv[1] == '--gui':
+		gui = GUI()
+	else:
+		players = 0
+		while players not in ['1', '2']:
+			print('How many players?')
+			players = read_input()
+		players = int(players)
+		while True:
+			if players == 1:
+				winner = single_player()
+			else:
+				winner = multi_player()
+			if winner > 0:
+				print("Player 1 wins!")
+			elif winner < 0:
+				print("Player 2 wins!")
+			else:
+				print("It's a draw!")
+			print('Type anything to play again, or Ctrl-D to exit')
+			read_input()
 
 
 def single_player():

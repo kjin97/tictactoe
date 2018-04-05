@@ -1,7 +1,11 @@
 # tictactoe
 
-Command line tic-tac-toe, no GUI yet.
+Run normally to play command line tic tac toe.
 
 Play by running ttt.py and following on-screen prompts.
 
-Ctrl+D to exit.
+Run with flag --gui to play using the Tkinter GUI. Press the buttons on the screen to play.
+
+Ctrl+D to exit command line program.
+
+Close Tkinter window to exit GUI.
