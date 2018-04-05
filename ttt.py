@@ -242,7 +242,7 @@ class GUI:
 					self._grid[row][col].config(image = self._blank)
 
 
-		self._game.print_board()
+		# self._game.print_board()
 		if self._game.over:
 			for i in range(3):
 				for j in range(3):
@@ -307,7 +307,7 @@ def read_input():
 		exit()
 
 def main():
-	if sys.argv[1] == '--gui':
+	if len(sys.argv) > 1 and sys.argv[1] == '--gui':
 		gui = GUI()
 	else:
 		players = 0
